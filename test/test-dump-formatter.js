@@ -11,9 +11,6 @@ it('imports the module', function () {
 describe('formatted dump', function () {
     // suitable for inclusion in a C/C++ file
 
-    // "$ 00 01 02 03 04 05 06 07 08  09 0A 0B 0C 0D 0E 0F ................." \ // 00-0F
-    // "$ 00 01 02 03 04 05 06 07 08  09 0A 0B 0C 0D 0E 0F ................." \ // 10-1F
-    // ;
     var fixture = {
         filename: 'cat.exe',
         mtime: new Date('Mon 10 Oct 2011 23:24:11 GMT'),
@@ -33,7 +30,25 @@ describe('formatted dump', function () {
                      "// 37 bytes from 0x000004D2 to 0x000004F7");
     });
 
-    // const char * file_offset_length = \ /* 0x00001234 */
+    // const char * file_offset_length = \
     it('formats a variable declaration', function () {
+        assert.equal(dumpFormatter.variableDeclaration(fixture),
+                     "const char * cat_exe_0x000004D2_37 =\\");
     });
+
+    it('writes a DATA header line', function () {
+        assert.equal(dumpFormatter.dataHeader(fixture),
+                     '"Data: DATA 37"');
+    });
+
+    it('formats a complete DATA body line', function () {
+        var b = new Buffer(16);
+
+        assert.equal(dumpFormatter.dataBodyLine(b, 0),
+                     '"$ 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  ................" // 00-0F' );
+    });
+
+    // "$ 00 01 02 03 04 05 06 07 08  09 0A 0B 0C 0D 0E 0F   ................." \ // 00-0F
+    // "$ 00 01 02 03 04 05 06 07 08  09 0A 0B 0C 0D 0E 0F   ................." \ // 10-1F
+    // ;
 });
