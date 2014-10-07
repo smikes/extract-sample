@@ -22,5 +22,9 @@ describe('formatted dump', function () {
         assert.equal(dumpFormatter.headerLine({filename: 'cat.exe',
                                                mtime: new Date('Mon 10 Oct 2011 23:24:11 GMT')}),
                      "// Extracted from cat.exe [Mon, 10 Oct 2011 23:24:11 GMT]\n");
+    it('formats a second header line', function () {
+        assert.equal(dumpFormatter.headerLine2({offset: 1234,
+                                                buffer: new Buffer(37)}),
+                     "// 37 bytes from 0x000004D2 to 0x000004F7");
     });
 });

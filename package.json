@@ -21,6 +21,7 @@
   "dependencies": {
     "istanbul": "^0.3.2",
     "jslint": "^0.6.4",
-    "mocha": "^1.21.4"
+    "mocha": "^1.21.4",
+    "sprintf-js": "0.0.7"
   }
 }
