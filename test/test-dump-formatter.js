@@ -18,10 +18,12 @@ describe('formatted dump', function () {
     // "$ 00 01 02 03 04 05 06 07 08  09 0A 0B 0C 0D 0E 0F ................." \ // 10-1F
     // ;
 
-    it('writes a header line', function () {
+    it('formats a header line', function () {
         assert.equal(dumpFormatter.headerLine({filename: 'cat.exe',
                                                mtime: new Date('Mon 10 Oct 2011 23:24:11 GMT')}),
-                     "// Extracted from cat.exe [Mon, 10 Oct 2011 23:24:11 GMT]\n");
+                     "// Extracted from cat.exe [Mon, 10 Oct 2011 23:24:11 GMT]");
+    });
+
     it('formats a second header line', function () {
         assert.equal(dumpFormatter.headerLine2({offset: 1234,
                                                 buffer: new Buffer(37)}),
