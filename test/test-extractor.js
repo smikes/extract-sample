@@ -36,4 +36,40 @@ describe('extractor', function () {
             done();
         });
     });
+
+    describe('error handler tests', function () {
+        it('handles file-open errors', function (done) {
+            var file = new extractor.File('foo', 0, 16, function (err, f) {
+                assert.equal(undefined, f);
+                assert.notEqual(null, err);
+                assert.ok(err instanceof Error);
+                done();
+            });
+
+            file.onOpen(new Error('sample error'));
+        });
+
+        it('handles file-stat errors', function (done) {
+            var file = new extractor.File('foo', 0, 16, function (err, f) {
+                assert.equal(undefined, f);
+                assert.notEqual(null, err);
+                assert.ok(err instanceof Error);
+                done();
+            });
+
+            file.onStat(new Error('sample error'));
+        });
+
+        it('handles file-read errors', function (done) {
+            var file = new extractor.File('foo', 0, 16, function (err, f) {
+                assert.equal(undefined, f);
+                assert.notEqual(null, err);
+                assert.ok(err instanceof Error);
+                done();
+            });
+
+            file.onRead(new Error('sample error'));
+        });
+
+    });
 });
