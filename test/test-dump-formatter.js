@@ -41,14 +41,69 @@ describe('formatted dump', function () {
                      '"Data: DATA 37\\n"');
     });
 
-    it('formats a complete DATA body line', function () {
-        var b = new Buffer(16);
+    describe('data body line', function () {
 
-        assert.equal(dumpFormatter.dataBodyLine(b, 0),
-                     '"$ 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  ................" // 00-0F' );
+        it('formats a complete DATA body line', function () {
+            var b = new Buffer(16);
+
+            b.fill(0);
+
+            assert.equal(dumpFormatter.dataBodyLine(b, 0),
+                         '"$ 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  ................\\n" // 00-0F');
+        });
+
+        it('formats a one-byte DATA body line', function () {
+            var b = new Buffer(1);
+
+            b.fill(0);
+
+            assert.equal(dumpFormatter.dataBodyLine(b, 0),
+                         '"$ 00                                                .               \\n" // 00-00');
+        });
+
+        it('formats a eight-byte DATA body line', function () {
+            var b = new Buffer(8);
+
+            b.fill(1);
+
+            assert.equal(dumpFormatter.dataBodyLine(b, 0),
+                         '"$ 01 01 01 01 01 01 01 01                           ........        \\n" // 00-07');
+        });
+
+        it('formats a nine-byte DATA body line', function () {
+            var b = new Buffer(9);
+
+            b.fill(65);
+
+            assert.equal(dumpFormatter.dataBodyLine(b, 0),
+                         '"$ 41 41 41 41 41 41 41 41  41                       AAAAAAAAA       \\n" // 00-08');
+        });
+
+        it('formats a 15-byte DATA body line', function () {
+            var b = new Buffer(15);
+
+            b.fill(128);
+
+            assert.equal(dumpFormatter.dataBodyLine(b, 0),
+                         '"$ 80 80 80 80 80 80 80 80  80 80 80 80 80 80 80     ............... \\n" // 00-0E');
+        });
     });
 
-    // "$ 00 01 02 03 04 05 06 07 08  09 0A 0B 0C 0D 0E 0F   ................." \ // 00-0F
-    // "$ 00 01 02 03 04 05 06 07 08  09 0A 0B 0C 0D 0E 0F   ................." \ // 10-1F
-    // ;
+    it('formats a dummy file', function () {
+        assert.equal(dumpFormatter({
+            filename: 'cat.exe',
+            mtime: new Date('Mon 10 Oct 2011 23:24:11 GMT'),
+            offset: 0,
+            buffer: new Buffer(1)
+        }), 
+"// Extracted from cat.exe [Mon, 10 Oct 2011 23:24:11 GMT]\n" +
+"// 1 bytes from 0x00000000 to 0x00000001\n" +
+"const char * cat_exe_0x00000000_1 =\\\n" +
+'"Data: DATA 1\\n"\n' +
+'"$ 00                                                .               \\n" // 00-00\n' +
+";"
+);
+
+    });
+
 });
