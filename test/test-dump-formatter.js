@@ -38,7 +38,7 @@ describe('formatted dump', function () {
 
     it('writes a DATA header line', function () {
         assert.equal(dumpFormatter.dataHeader(fixture),
-                     '"Data: DATA 37"');
+                     '"Data: DATA 37\\n"');
     });
 
     it('formats a complete DATA body line', function () {
