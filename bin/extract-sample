@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+var program = require('commander'),
+    package = require('../package.json'),
+    main = require('../lib/main');
+
+program
+  .version(package.version)
+  .usage('[options] <file> <offset> <length>')
+  .parse(process.argv);
+
+main(program, console, process);

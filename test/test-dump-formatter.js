@@ -110,3 +110,13 @@ describe('formatted dump', function () {
     });
 
 });
+
+describe('regression tests', function () {
+    it('escapes / in filenames to _', function () {
+        assert.equal('test_cat_exe', dumpFormatter.c_escape('test/cat.exe'));
+    });
+
+    it('escapes multiple / in filenames to _', function () {
+        assert.equal('test_fixtures_cat_exe', dumpFormatter.c_escape('test/fixtures/cat.exe'));
+    });
+});

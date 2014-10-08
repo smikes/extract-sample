@@ -1,6 +1,6 @@
 {
   "name": "extract-sample",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "extract a sample record from a binary file and format as C string",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,9 @@
     "cover": "istanbul cover --root lib --print=both -- ./node_modules/mocha/bin/_mocha",
     "lint": "./node_modules/.bin/jslint --terse lib/*.js test/*.js"
   },
+  "bin": [
+    "bin/extract-sample"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/smikes/extract-sample.git"
@@ -19,6 +22,7 @@
   },
   "homepage": "https://github.com/smikes/extract-sample",
   "dependencies": {
+    "commander": "^2.3.0",
     "istanbul": "^0.3.2",
     "jslint": "^0.6.4",
     "mocha": "^1.21.4",
