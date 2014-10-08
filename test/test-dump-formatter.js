@@ -90,20 +90,23 @@ describe('formatted dump', function () {
     });
 
     it('formats a dummy file', function () {
+        var b = new Buffer(1);
+
+        b.fill(0);
+
         assert.equal(dumpFormatter({
             filename: 'cat.exe',
             mtime: new Date('Mon 10 Oct 2011 23:24:11 GMT'),
             offset: 0,
-            buffer: new Buffer(1)
-        }), 
-"// Extracted from cat.exe [Mon, 10 Oct 2011 23:24:11 GMT]\n" +
-"// 1 bytes from 0x00000000 to 0x00000001\n" +
-"const char * cat_exe_0x00000000_1 =\\\n" +
-'"Data: DATA 1\\n"\n' +
-'"$ 00                                                .               \\n" // 00-00\n' +
-";"
-);
-
+            buffer: b
+        }),
+                     "// Extracted from cat.exe [Mon, 10 Oct 2011 23:24:11 GMT]\n" +
+                     "// 1 bytes from 0x00000000 to 0x00000001\n" +
+                     "const char * cat_exe_0x00000000_1 =\\\n" +
+                     '"Data: DATA 1\\n"\n' +
+                     '"$ 00                                                .               \\n" // 00-00\n' +
+                     ";"
+                    );
     });
 
 });
