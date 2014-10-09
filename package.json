@@ -1,6 +1,6 @@
 {
   "name": "extract-sample",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "extract a sample record from a binary file and format as C string",
   "main": "index.js",
   "scripts": {
