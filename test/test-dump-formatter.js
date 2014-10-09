@@ -119,4 +119,9 @@ describe('regression tests', function () {
     it('escapes multiple / in filenames to _', function () {
         assert.equal('test_fixtures_cat_exe', dumpFormatter.c_escape('test/fixtures/cat.exe'));
     });
+
+    it('escapes backslash and quote to dot', function () {
+        assert.equal(dumpFormatter.escapeChar('\\'.charCodeAt(0)), '.');
+        assert.equal(dumpFormatter.escapeChar('"'.charCodeAt(0)), '.');
+    });
 });
